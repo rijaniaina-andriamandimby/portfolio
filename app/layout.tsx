@@ -5,14 +5,14 @@ import "./globals.css";
 const roboto = Roboto({ subsets: ["latin"], weight: ["300", "400", "500", "700", "900"], style: ["normal", "italic"], variable: "--font-roboto", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Rijaniaina Andriamandimby — Développeur Full Stack",
-  description: "Portfolio de Rijaniaina Andriamandimby, développeur ReactJS / ExpressJS / Django",
+  title: "Rijaniaina Andriamandimby — Full Stack Developer",
+  description: "Portfolio of Rijaniaina Andriamandimby, ReactJS / ExpressJS / Django developer",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr">
-      <body className={roboto.variable}>{children}</body>
+    <html lang="en" className="scroll-smooth">
+      <body className={`${roboto.variable} overflow-x-hidden bg-bg font-sans text-base leading-relaxed text-fg antialiased`}>{children}</body>
     </html>
   );
 }

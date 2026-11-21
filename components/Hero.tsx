@@ -1,250 +1,73 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { ArrowDown, Code2, FolderKanban, Laptop, Wrench } from "lucide-react";
+import { ui } from "./ui";
+
+const stats = [
+  { icon: FolderKanban, num: "7", label: "Projects" },
+  { icon: Laptop, num: "2", label: "Internships" },
+  { icon: Wrench, num: "15", label: "Technologies" },
+];
 
 export default function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const particles: { x: number; y: number; vx: number; vy: number; size: number; alpha: number }[] = [];
-    for (let i = 0; i < 60; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3,
-        size: Math.random() * 1.5 + 0.5,
-        alpha: Math.random() * 0.4 + 0.1,
-      });
-    }
-
-    let animId: number;
-    const animate = () => {
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const size = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
+    size();
+    const dots = Array.from({ length: 60 }, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.3, vy: (Math.random() - 0.5) * 0.3, r: Math.random() * 1.5 + 0.5, a: Math.random() * 0.4 + 0.1 }));
+    let id = 0;
+    const tick = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(207,210,214, ${p.alpha})`;
-        ctx.fill();
-      });
-      animId = requestAnimationFrame(animate);
+      for (const p of dots) {
+        p.x = (p.x + p.vx + canvas.width) % canvas.width;
+        p.y = (p.y + p.vy + canvas.height) % canvas.height;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = `rgba(207,210,214,${p.a})`; ctx.fill();
+      }
+      id = requestAnimationFrame(tick);
     };
-    animate();
-
-    const onResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    };
-    window.addEventListener("resize", onResize);
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", onResize);
-    };
+    tick();
+    window.addEventListener("resize", size);
+    return () => { cancelAnimationFrame(id); window.removeEventListener("resize", size); };
   }, []);
 
   return (
-    <section
-      id="profil"
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
-        overflow: "hidden",
-        padding: "6rem 2rem 4rem",
-      }}
-    >
-      <canvas
-        ref={canvasRef}
-        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
-      />
+    <section id="profile" className="relative flex min-h-screen items-center overflow-hidden px-6 pb-12 pt-28">
+      <canvas ref={canvasRef} className="pointer-events-none absolute inset-0 size-full" aria-hidden />
+      <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(var(--color-line)_1px,transparent_1px),linear-gradient(90deg,var(--color-line)_1px,transparent_1px)] bg-size-[60px_60px] opacity-30" aria-hidden />
 
-      {/* Grid overlay */}
-      <div style={{
-        position: "absolute",
-        inset: 0,
-        backgroundImage: "linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)",
-        backgroundSize: "60px 60px",
-        opacity: 0.3,
-      }} />
-
-      <div className="hero-container"
-  style={{
-    position: "relative",
-    zIndex: 1,
-    maxWidth: "1200px",
-    width: "100%",
-    margin: "0 auto",
-  }}>
-        <img src="/profile.jpg" alt="Rijaniaina Andriamandimby" style={{ width: "140px", height: "140px", objectFit: "cover", borderRadius: "50%", border: "3px solid var(--border)", marginBottom: "1.5rem", display: "block" }} />
-        {/* Tag */}
-        <div style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: "0.5rem",
-          background: "var(--surface)",
-          border: "1px solid var(--border)",
-          borderRadius: "2px",
-          padding: "0.4rem 0.8rem",
-          fontSize: "0.7rem",
-          color: "var(--accent)",
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          marginBottom: "2rem",
-          animation: "fadeUp 0.6s ease both",
-        }}>
-          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "var(--accent)", display: "inline-block", animation: "pulse 2s infinite" }} />
-          Disponible pour opportunités
-        </div>
-
-        {/* Name */}
-        <h1 style={{
-          fontFamily: "Roboto, sans-serif",
-          fontWeight: 800,
-          fontSize: "clamp(2.5rem, 8vw, 6rem)",
-          lineHeight: 0.95,
-          letterSpacing: "-0.04em",
-          marginBottom: "1rem",
-          animation: "fadeUp 0.6s 0.1s ease both",
-        }}>
-          <span style={{ display: "block", color: "var(--text)" }}>RIJANIAINA</span>
-          <span style={{ display: "block", color: "var(--accent)" }}>ANDRIAM<span style={{ color: "var(--text)", fontStyle: "italic", fontFamily: "Roboto, sans-serif" }}>andimby</span></span>
-        </h1>
-
-        {/* Role */}
-        <p style={{
-          fontSize: "clamp(0.85rem, 2vw, 1.1rem)",
-          color: "var(--muted)",
-          letterSpacing: "0.15em",
-          textTransform: "uppercase",
-          marginBottom: "2rem",
-          animation: "fadeUp 0.6s 0.2s ease both",
-        }}>
-          Développeur Full Stack · ReactJS / ExpressJS / Django
-        </p>
-
-        {/* Bio */}
-        <p style={{
-          maxWidth: "640px",
-          color: "var(--text)",
-          opacity: 0.7,
-          lineHeight: 1.8,
-          fontSize: "0.85rem",
-          marginBottom: "3rem",
-          animation: "fadeUp 0.6s 0.3s ease both",
-        }}>
-          I am a curious, ambitious, and growth-oriented individual with a strong passion for technology and software engineering. I enjoy solving complex problems, exploring new technologies, and turning ideas into practical solutions. Driven by continuous learning and self-improvement, I strive to build reliable, meaningful, and impactful software.
-        </p>
-
-        {/* CTA */}
-        <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", animation: "fadeUp 0.6s 0.4s ease both" }}>
-          <a
-            href="#projets"
-            style={{
-              background: "var(--accent)",
-              color: "var(--bg)",
-              padding: "0.85rem 2rem",
-              fontFamily: "Roboto, sans-serif",
-              fontWeight: 700,
-              fontSize: "0.8rem",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              borderRadius: "2px",
-              transition: "transform 0.2s, box-shadow 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow = "0 8px 24px rgba(207,210,214,0.3)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "none";
-            }}
-          >
-            Voir mes projets
-          </a>
-          <a
-            href="https://github.com/rijaniaina-andriamandimby"
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
-              border: "1px solid var(--border)",
-              color: "var(--text)",
-              padding: "0.85rem 2rem",
-              fontFamily: "Roboto, sans-serif",
-              fontWeight: 600,
-              fontSize: "0.8rem",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              textDecoration: "none",
-              borderRadius: "2px",
-              transition: "border-color 0.2s, color 0.2s",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = "var(--accent)";
-              e.currentTarget.style.color = "var(--accent)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = "var(--border)";
-              e.currentTarget.style.color = "var(--text)";
-            }}
-          >
-            GitHub →
-          </a>
-        </div>
-
-        {/* Stats */}
-        <div style={{
-          display: "flex",
-          gap: "3rem",
-          marginTop: "5rem",
-          paddingTop: "2rem",
-          borderTop: "1px solid var(--border)",
-          flexWrap: "wrap",
-          animation: "fadeUp 0.6s 0.5s ease both",
-        }}>
-          {[
-            { num: "7", label: "Projets réalisés" },
-            { num: "2", label: "Stages effectués" },
-            { num: "15", label: "Technologies" },
-          ].map((s) => (
-            <div key={s.label}>
-              <div style={{ fontFamily: "Roboto, sans-serif", fontWeight: 800, fontSize: "2rem", color: "var(--accent)", lineHeight: 1 }}>
-                {s.num}
+      <div className={`${ui.wrap} relative grid items-center gap-10 md:grid-cols-[1.3fr_1fr]`}>
+        {/* Text: left */}
+        <div className="order-2 md:order-1">
+          <div className={`${ui.label} mb-8 inline-flex animate-fade-up items-center gap-2 rounded-sm border border-line bg-surface px-3 py-1.5 text-accent`}>
+            <span className="size-1.5 animate-pulse rounded-full bg-accent" />Available for opportunities
+          </div>
+          <h1 className={`${ui.h1} mb-4 animate-fade-up [animation-delay:.1s]`}>Rijaniaina<br /><span className="text-accent">Andriamandimby</span></h1>
+          <p className={`${ui.label} mb-6 animate-fade-up text-muted [animation-delay:.2s]`}>Full Stack Developer · ReactJS / ExpressJS / Django</p>
+          <p className={`${ui.lead} mb-10 max-w-160 animate-fade-up [animation-delay:.3s]`}>
+            I am a curious, ambitious, and growth-oriented individual with a strong passion for technology and software engineering. I enjoy solving complex problems, exploring new technologies, and turning ideas into practical solutions. Driven by continuous learning and self-improvement, I strive to build reliable, meaningful, and impactful software while constantly developing my technical and personal skills.
+          </p>
+          <div className={`${ui.row} mb-14 animate-fade-up gap-4 [animation-delay:.4s]`}>
+            <a href="#projects" className={ui.btn}><ArrowDown size={14} aria-hidden />View my projects</a>
+            <a href="https://github.com/rijaniaina-andriamanimby" target="_blank" rel="noopener noreferrer" className={ui.btnGhost}><Code2 size={14} aria-hidden />GitHub</a>
+          </div>
+          <div className="flex animate-fade-up flex-wrap gap-12 border-t border-line pt-8 [animation-delay:.5s]">
+            {stats.map((s) => (
+              <div key={s.label} className="flex items-center gap-3">
+                <s.icon size={22} className="text-accent" aria-hidden />
+                <div><div className="text-[2rem] font-extrabold leading-none text-accent">{s.num}</div><div className={`${ui.small} mt-1`}>{s.label}</div></div>
               </div>
-              <div style={{ fontSize: "0.7rem", color: "var(--muted)", letterSpacing: "0.08em", marginTop: "0.25rem" }}>
-                {s.label}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
+        {/* Portrait: right, vertical 4:5, transparent background */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/profile.png" alt="Portrait of Rijaniaina Andriamandimby" className="order-1 mx-auto aspect-[4/5] w-full max-w-[250px] object-contain object-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,.35)] md:order-2 md:max-w-[420px]" />
       </div>
-
-      <style>{`
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(20px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.3; }
-        }
-      `}</style>
     </section>
   );
 }

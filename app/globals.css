@@ -1,22 +1,23 @@
 @import "tailwindcss";
 
-:root {
-  --bg: #2a2c2f;
-  --bg2: #232528;
-  --surface: #34373b;
-  --border: #45484d;
-  --accent: #cfd2d6;
-  --accent2: #aeb2b8;
-  --text: #ececea;
-  --muted: #9a9da2;
+@theme {
+  --color-bg: #2a2c2f;
+  --color-bg2: #232528;
+  --color-surface: #34373b;
+  --color-line: #45484d;
+  --color-accent: #cfd2d6;
+  --color-fg: #ececea;
+  --color-muted: #a2a5aa;
+  --font-sans: var(--font-roboto), Roboto, system-ui, sans-serif;
+  --animate-fade-up: fade-up 0.6s ease both;
+  @keyframes fade-up { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--text); font-family: var(--font-roboto), Roboto, system-ui, sans-serif; overflow-x: hidden; }
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
-::selection { background: var(--accent); color: var(--bg); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
+@layer base {
+  :focus-visible { outline: 2px solid var(--color-accent); outline-offset: 3px; }
+  ::selection { background: var(--color-accent); color: var(--color-bg); }
+  button { cursor: pointer; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb { background: var(--color-accent); border-radius: 2px; }
+}

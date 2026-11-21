@@ -1,95 +1,68 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Briefcase, Building2, Calendar, ChevronLeft, ChevronRight, FolderKanban, GraduationCap, ImageOff, Smartphone, Trophy, type LucideIcon } from "lucide-react";
+import SectionHeader from "./SectionHeader";
+import { techIcon } from "./techIcons";
+import { ui } from "./ui";
 
-type Project = { slug: string; title: string; client: string; date: string; type: string; desc: string; stack: string[]; n: number };
+type Project = { slug: string; title: string; place: string; date: string; type: string; icon: LucideIcon; desc: string; stack: string[]; n: number };
 
 const projects: Project[] = [
-  { slug: "devhunt-eni", title: "Dev Hunt – Hackathon ENI", client: "Ecole Nationale d'Informatique", date: "Avril 2026", type: "Hackathon", desc: "Participation au hackathon interne de l'ENI.", stack: [], n: 3 },
-  { slug: "gestion-scolaire", title: "Application Web de Gestion Scolaire", client: "Lycée d'Enseignement Générale Andramasina", date: "Décembre 2025", type: "Freelance", desc: "Application de gestion des étudiants, des matières et des enseignants du lycée d'Andramasina.", stack: ["ReactJS", "Django", "PostgreSQL"], n: 3 },
-  { slug: "communication-interne", title: "Plateforme de Communication Interne", client: "Success MDG – Anosisoa Antananarivo", date: "Sept – Nov 2025", type: "Stage · 3 mois", desc: "Développement d'une plateforme de communication interne et de suivi des activités de l'entreprise.", stack: ["ReactJS", "ExpressJS", "PostgreSQL"], n: 3 },
-  { slug: "villa-reservation", title: "Refonte Site Web & App Réservation de Villa", client: "Polypus Corporation S.A", date: "Sept – Nov 2024", type: "Stage · 3 mois", desc: "Amélioration du site web de l'entreprise et développement d'une application de gestion des réservations de leurs villas.", stack: [], n: 3 },
-  { slug: "gestion-restaurant", title: "Gestion de Restaurant", client: "ENI Fianarantsoa", date: "", type: "Projet académique", desc: "Application de gestion d'un restaurant (commandes, menus, stock).", stack: [], n: 3 },
-  { slug: "gestion-entretien", title: "Gestion d'Entretien", client: "ENI Fianarantsoa", date: "", type: "Projet académique", desc: "Application de gestion et de suivi des entretiens.", stack: [], n: 3 },
-  { slug: "scan-documents", title: "Scan de Documents Administratifs", client: "ENI Fianarantsoa", date: "", type: "Application mobile", desc: "Application mobile de numérisation de documents administratifs.", stack: [], n: 3 },
+  { slug: "devhunt-eni", title: "Dev Hunt – ENI Hackathon", place: "National School of Computer Science (ENI)", date: "April 2026", type: "Hackathon", icon: Trophy, desc: "Participation in the internal hackathon of ENI.", stack: [], n: 3 },
+  { slug: "gestion-scolaire", title: "School Management Web Application", place: "Andramasina General Education High School", date: "December 2025", type: "Freelance", icon: Briefcase, desc: "Application to manage the students, subjects and teachers of the Andramasina high school.", stack: ["ReactJS", "Django", "PostgreSQL"], n: 3 },
+  { slug: "communication-interne", title: "Internal Communication Platform", place: "Success MDG – Anosisoa, Antananarivo", date: "Sep – Nov 2025", type: "3-month internship", icon: Briefcase, desc: "Development of an internal communication and activity tracking platform for the company.", stack: ["ReactJS", "ExpressJS", "PostgreSQL"], n: 3 },
+  { slug: "villa-reservation", title: "Website Redesign & Villa Booking App", place: "Polypus Corporation S.A", date: "Sep – Nov 2024", type: "3-month internship", icon: Briefcase, desc: "Improvement of the company website and development of a booking management application for their villas.", stack: [], n: 3 },
+  { slug: "gestion-restaurant", title: "Restaurant Management", place: "ENI Fianarantsoa", date: "", type: "Academic project", icon: GraduationCap, desc: "Application to manage a restaurant (orders, menus, stock).", stack: [], n: 3 },
+  { slug: "gestion-entretien", title: "Maintenance Management", place: "ENI Fianarantsoa", date: "", type: "Academic project", icon: GraduationCap, desc: "Application to manage and follow maintenance operations.", stack: [], n: 3 },
+  { slug: "scan-documents", title: "Administrative Document Scanner", place: "ENI Fianarantsoa", date: "", type: "Mobile app", icon: Smartphone, desc: "Mobile application to scan administrative documents.", stack: [], n: 3 },
 ];
 
-const btn = { background: "var(--accent)", color: "var(--bg)", border: "none", padding: "0.55rem 1.1rem", fontFamily: "Roboto, sans-serif", fontWeight: 700, fontSize: "0.75rem", borderRadius: "2px", cursor: "pointer" } as const;
-
-function Gallery({ p, onClose }: { p: Project; onClose: () => void }) {
+function Carousel({ p }: { p: Project }) {
   const [i, setI] = useState(0);
   const [failed, setFailed] = useState<Record<number, boolean>>({});
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") setI((v) => (v + 1) % p.n);
-      if (e.key === "ArrowLeft") setI((v) => (v - 1 + p.n) % p.n);
-    };
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKey);
-    return () => { document.body.style.overflow = ""; window.removeEventListener("keydown", onKey); };
-  }, [p.n, onClose]);
-
+  const go = (d: number) => setI((v) => (v + d + p.n) % p.n);
+  const arrow = "absolute top-1/2 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-black/70 transition-colors hover:bg-black";
   return (
-    <div role="dialog" aria-modal="true" aria-label={p.title} onClick={onClose}
-      style={{ position: "fixed", inset: 0, background: "rgba(20,21,22,0.9)", zIndex: 200, display: "grid", placeItems: "center", padding: "1rem" }}>
-      <div onClick={(e) => e.stopPropagation()} style={{ width: "min(960px,100%)", background: "var(--surface)", border: "1px solid var(--border)", borderRadius: "6px", padding: "1rem", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", fontSize: "0.85rem" }}>
-          <span>{p.title} · {i + 1}/{p.n}</span>
-          <button style={btn} onClick={onClose} autoFocus>Fermer</button>
-        </div>
-        <div style={{ background: "var(--bg2)", borderRadius: "4px", minHeight: "260px", display: "grid", placeItems: "center", color: "var(--muted)", fontSize: "0.85rem", textAlign: "center", padding: "1rem" }}>
-          {failed[i] ? (
-            <span>Ajoutez la photo dans public/projects/{p.slug}/{i + 1}.jpg</span>
-          ) : (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={`/projects/${p.slug}/${i + 1}.jpg`} alt={`${p.title}, photo ${i + 1}`} onError={() => setFailed((f) => ({ ...f, [i]: true }))} style={{ maxWidth: "100%", maxHeight: "65vh", objectFit: "contain" }} />
-          )}
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <button style={btn} onClick={() => setI((i - 1 + p.n) % p.n)}>Précédente</button>
-          <button style={btn} onClick={() => setI((i + 1) % p.n)}>Suivante</button>
-        </div>
+    <div className="relative grid aspect-[16/10] place-items-center overflow-hidden rounded-sm bg-bg2" tabIndex={0} role="group" aria-roledescription="carousel" aria-label={`${p.title} photos`}
+      onKeyDown={(e) => { if (e.key === "ArrowRight") go(1); if (e.key === "ArrowLeft") go(-1); }}>
+      {failed[i] ? (
+        <div className={`${ui.small} flex flex-col items-center gap-2 p-4 text-center`}><ImageOff size={24} aria-hidden />Add public/projects/{p.slug}/{i + 1}.jpg</div>
+      ) : (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img key={i} className="size-full object-cover" src={`/projects/${p.slug}/${i + 1}.jpg`} alt={`${p.title}, photo ${i + 1} of ${p.n}`} onError={() => setFailed((f) => ({ ...f, [i]: true }))} />
+      )}
+      <button className={`${arrow} left-2`} onClick={() => go(-1)} aria-label="Previous photo"><ChevronLeft size={18} /></button>
+      <button className={`${arrow} right-2`} onClick={() => go(1)} aria-label="Next photo"><ChevronRight size={18} /></button>
+      <span className="absolute right-2 top-2 rounded-full bg-black/70 px-2 text-xs">{i + 1}/{p.n}</span>
+      <div className="absolute inset-x-0 bottom-2 flex justify-center gap-1.5">
+        {Array.from({ length: p.n }, (_, k) => <button key={k} onClick={() => setI(k)} aria-label={`Go to photo ${k + 1}`} className={`size-2 rounded-full ${k === i ? "bg-accent" : "bg-white/40"}`} />)}
       </div>
     </div>
   );
 }
 
 export default function Projects() {
-  const [hovered, setHovered] = useState<string | null>(null);
-  const [open, setOpen] = useState<Project | null>(null);
-
   return (
-    <section id="projets" style={{ padding: "6rem 2rem", background: "var(--bg2)" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
-        <div style={{ marginBottom: "4rem" }}>
-          <p style={{ color: "var(--accent)", fontSize: "0.7rem", letterSpacing: "0.2em", textTransform: "uppercase", marginBottom: "0.75rem" }}>// 02 — Projets</p>
-          <h2 style={{ fontFamily: "Roboto, sans-serif", fontWeight: 800, fontSize: "clamp(2rem, 5vw, 3.5rem)", letterSpacing: "-0.03em", lineHeight: 1 }}>
-            Expériences <span style={{ color: "var(--accent)", fontStyle: "italic", fontWeight: 300 }}>& Réalisations</span>
-          </h2>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem" }}>
+    <section id="projects" className={`${ui.sec} bg-bg2`}>
+      <div className={ui.wrap}>
+        <SectionHeader icon={FolderKanban} num="02" label="Projects" title="Experience & Achievements" />
+        <div className={ui.grid}>
           {projects.map((p) => (
-            <div key={p.slug} onMouseEnter={() => setHovered(p.slug)} onMouseLeave={() => setHovered(null)}
-              style={{ background: "var(--surface)", border: `1px solid ${hovered === p.slug ? "var(--accent)" : "var(--border)"}`, borderRadius: "4px", padding: "2rem", display: "flex", flexDirection: "column", gap: "0.9rem", alignItems: "flex-start", transition: "border-color 0.3s, transform 0.3s", transform: hovered === p.slug ? "translateY(-4px)" : "none" }}>
-              <div style={{ display: "flex", justifyContent: "space-between", width: "100%", gap: "1rem" }}>
-                <span style={{ fontSize: "0.65rem", color: "var(--accent)", letterSpacing: "0.1em", textTransform: "uppercase", border: "1px solid var(--border)", padding: "0.2rem 0.6rem", borderRadius: "2px" }}>{p.type}</span>
-                <span style={{ fontSize: "0.7rem", color: "var(--muted)" }}>{p.date}</span>
+            <article key={p.slug} className={`${ui.card} group flex flex-col gap-4`}>
+              <div className={ui.topLine} />
+              <Carousel p={p} />
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className={`${ui.label} inline-flex items-center gap-1.5 rounded-sm border border-line px-2 py-1 text-accent`}><p.icon size={13} aria-hidden />{p.type}</span>
+                {p.date && <span className={`${ui.small} flex items-center gap-1`}><Calendar size={13} aria-hidden />{p.date}</span>}
               </div>
-              <h3 style={{ fontWeight: 700, fontSize: "1.05rem", lineHeight: 1.3 }}>{p.title}</h3>
-              <p style={{ fontSize: "0.75rem", color: "var(--accent)", opacity: 0.8 }}>{p.client}</p>
-              <p style={{ fontSize: "0.82rem", color: "var(--muted)", lineHeight: 1.7 }}>{p.desc}</p>
-              {p.stack.length > 0 && (
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-                  {p.stack.map((t) => <span key={t} style={{ fontSize: "0.68rem", background: "var(--bg)", border: "1px solid var(--border)", padding: "0.25rem 0.6rem", borderRadius: "2px" }}>{t}</span>)}
-                </div>
-              )}
-              <button style={{ ...btn, marginTop: "auto" }} onClick={() => setOpen(p)}>Voir les photos ({p.n})</button>
-            </div>
+              <h3 className={ui.h3}>{p.title}</h3>
+              <p className={`${ui.small} flex items-center gap-1.5 !text-accent`}><Building2 size={14} aria-hidden />{p.place}</p>
+              <p className={ui.text}>{p.desc}</p>
+              {p.stack.length > 0 && <div className={ui.row}>{p.stack.map((t) => { const I = techIcon(t); return <span key={t} className={ui.tag}><I size={14} className="text-accent" aria-hidden />{t}</span>; })}</div>}
+            </article>
           ))}
         </div>
       </div>
-      {open && <Gallery p={open} onClose={() => setOpen(null)} />}
     </section>
   );
 }

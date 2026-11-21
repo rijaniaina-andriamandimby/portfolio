@@ -1,129 +1,44 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Briefcase, FolderKanban, GraduationCap, Mail, Menu, User, Wrench, X } from "lucide-react";
+import { ui } from "./ui";
 
 const links = [
-  { label: "Profil", href: "#profil" },
-  { label: "Compétences", href: "#competences" },
-  { label: "Projets", href: "#projets" },
-  { label: "Formation", href: "#formation" },
-  { label: "Contact", href: "#contact" },
+  { label: "Profile", href: "#profile", icon: User },
+  { label: "Skills", href: "#skills", icon: Wrench },
+  { label: "Projects", href: "#projects", icon: FolderKanban },
+  { label: "Education", href: "#education", icon: GraduationCap },
+  { label: "Contact", href: "#contact", icon: Briefcase },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    const on = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", on);
+    return () => window.removeEventListener("scroll", on);
   }, []);
 
   return (
-    <nav
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 100,
-        padding: "1rem 2rem",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        background: scrolled ? "rgba(42,44,47,0.92)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? "1px solid var(--border)" : "none",
-        transition: "all 0.3s ease",
-      }}
-    >
-      <a href="#" style={{ fontFamily: "Roboto, sans-serif", fontWeight: 800, fontSize: "1.1rem", color: "var(--accent)", textDecoration: "none", letterSpacing: "-0.02em" }}>
-        RA<span style={{ color: "var(--text)" }}>.</span>
-      </a>
-
-      {/* Desktop links */}
-      <div style={{ display: "flex", gap: "2rem" }} className="hidden-mobile">
+    <nav aria-label="Main" className={`fixed inset-x-0 top-0 z-50 flex items-center justify-between px-8 py-4 transition-all duration-300 ${scrolled ? "border-b border-line bg-bg/90 backdrop-blur-md" : ""}`}>
+      <a href="#" className="text-[1.1rem] font-extrabold tracking-tight text-accent">RA<span className="text-fg">.</span></a>
+      <div className="hidden gap-8 md:flex">
         {links.map((l) => (
-          <a
-            key={l.href}
-            href={l.href}
-            style={{
-              color: "var(--muted)",
-              textDecoration: "none",
-              fontSize: "0.75rem",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              transition: "color 0.2s",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "var(--accent)")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted)")}
-          >
-            {l.label}
-          </a>
+          <a key={l.href} href={l.href} className={`${ui.label} inline-flex items-center gap-1.5 text-muted transition-colors hover:text-accent`}><l.icon size={14} aria-hidden />{l.label}</a>
         ))}
       </div>
-
-      <a
-        href="mailto:rija.fam@gmail.com"
-        style={{
-          background: "var(--accent)",
-          color: "var(--bg)",
-          padding: "0.5rem 1.2rem",
-          fontSize: "0.72rem",
-          fontFamily: "Roboto, sans-serif",
-          fontWeight: 700,
-          letterSpacing: "0.06em",
-          textTransform: "uppercase",
-          textDecoration: "none",
-          borderRadius: "2px",
-        }}
-        className="hidden-mobile"
-      >
-        Me contacter
-      </a>
-
-      {/* Mobile burger */}
-      <button
-        onClick={() => setOpen(!open)}
-        className="show-mobile"
-        style={{ background: "none", border: "none", cursor: "pointer", color: "var(--text)", fontSize: "1.5rem" }}
-      >
-        {open ? "✕" : "☰"}
+      <a href="mailto:rija.fam@gmail.com" className={`${ui.btn} hidden !px-5 !py-2 md:inline-flex`}><Mail size={14} aria-hidden />Contact me</a>
+      <button className="md:hidden" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
+        {open ? <X size={24} /> : <Menu size={24} />}
       </button>
-
-      {/* Mobile menu */}
       {open && (
-        <div style={{
-          position: "fixed",
-          top: "60px",
-          left: 0,
-          right: 0,
-          background: "var(--bg2)",
-          padding: "1.5rem 2rem",
-          borderBottom: "1px solid var(--border)",
-          display: "flex",
-          flexDirection: "column",
-          gap: "1.5rem",
-        }}>
+        <div className="fixed inset-x-0 top-[60px] flex flex-col gap-5 border-b border-line bg-bg2 px-8 py-6 md:hidden">
           {links.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)}
-              style={{ color: "var(--text)", textDecoration: "none", fontFamily: "Roboto, sans-serif", fontSize: "1.1rem" }}>
-              {l.label}
-            </a>
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className={`${ui.h3} flex items-center gap-3`}><l.icon size={18} aria-hidden />{l.label}</a>
           ))}
         </div>
       )}
-
-      <style>{`
-        @media (max-width: 768px) {
-          .hidden-mobile { display: none !important; }
-          .show-mobile { display: block !important; }
-        }
-        @media (min-width: 769px) {
-          .show-mobile { display: none !important; }
-          .hidden-mobile { display: flex !important; }
-        }
-      `}</style>
     </nav>
   );
 }
