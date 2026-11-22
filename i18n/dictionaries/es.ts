@@ -1,0 +1,28 @@
+import type { Dict } from "./types";
+
+export const es: Dict = {
+  nav: { skip: "Saltar al contenido", profile: "Perfil", skills: "Habilidades", projects: "Proyectos", education: "Formación", contact: "Contacto", contactMe: "Contáctame", openMenu: "Abrir menú", closeMenu: "Cerrar menú", light: "Cambiar a modo claro", dark: "Cambiar a modo oscuro", language: "Idioma", top: "Volver arriba" },
+  hero: { badge: "Disponible para nuevas oportunidades", role: "Desarrollador Full Stack", bio: "Soy una persona curiosa, ambiciosa y orientada al crecimiento, con una gran pasión por la tecnología y la ingeniería de software. Disfruto resolviendo problemas complejos, explorando nuevas tecnologías y convirtiendo ideas en soluciones prácticas. Impulsado por el aprendizaje continuo y la superación personal, me esfuerzo por crear software fiable, útil y de impacto, desarrollando constantemente mis habilidades técnicas y personales.", view: "Ver mis proyectos", alt: "Retrato de Rijaniaina Andriamandimby", stats: { projects: "Proyectos", internships: "Prácticas", technologies: "Tecnologías" } },
+  skills: { label: "Habilidades", title: "Stack técnico", cats: { languages: "Lenguajes", frontend: "Frontend", backend: "Backend", databases: "Bases de datos", devops: "DevOps y CI/CD" }, basics: "nociones", spokenTitle: "Idiomas hablados", spoken: { fr: "Francés", en: "Inglés", mg: "Malgache" }, native: "Lengua materna" },
+  projects: { label: "Proyectos", title: "Experiencia y Logros", photo: "foto", photos: "fotos", open: "Abrir las fotos en una ventana", prev: "Foto anterior", next: "Foto siguiente", goTo: "Ir a la foto", close: "Cerrar", noPhotos: "Capturas de pantalla próximamente",
+    types: { hackathon: "Hackathon", freelance: "Freelance", internship: "Prácticas de 3 meses", academic: "Proyecto académico", mobile: "Aplicación móvil" },
+    items: {
+      "devhunt-eni": { title: "Dev Hunt – Hackathon ENI", place: "Escuela Nacional de Informática (ENI)", date: "Abril 2026", desc: "Participación en el hackathon interno de la ENI." },
+      "gestion-scolaire": { title: "Aplicación web de gestión escolar", place: "Liceo de Enseñanza General de Andramasina", date: "Diciembre 2025", desc: "Aplicación para gestionar los estudiantes, las asignaturas y los profesores del liceo de Andramasina." },
+      "communication-interne": { title: "Plataforma de comunicación interna", place: "Success MDG – Anosisoa, Antananarivo", date: "Sep. – Nov. 2025", desc: "Desarrollo de una plataforma de comunicación interna y seguimiento de actividades de la empresa." },
+      "villa-reservation": { title: "Rediseño web y app de reservas de villas", place: "Polypus Corporation S.A", date: "Sep. – Nov. 2024", desc: "Mejora del sitio web de la empresa y desarrollo de una aplicación de gestión de reservas de sus villas." },
+      "gestion-restaurant": { title: "Gestión de restaurante", place: "ENI Fianarantsoa", date: "", desc: "Aplicación para gestionar un restaurante (pedidos, menús, inventario)." },
+      "gestion-entretien": { title: "Gestión de mantenimiento", place: "ENI Fianarantsoa", date: "", desc: "Aplicación para gestionar y dar seguimiento al mantenimiento." },
+      "scan-documents": { title: "Escáner de documentos administrativos", place: "ENI Fianarantsoa", date: "", desc: "Aplicación móvil para escanear documentos administrativos." },
+    } },
+  education: { label: "Formación", title: "Trayectoria académica", levels: { master: "Máster", bachelor: "Grado", certificate: "Certificado de formación", highschool: "Diploma de bachillerato" }, status: { progress: "En curso", completed: "Completado", certified: "Certificado" },
+    items: {
+      master: { title: "Máster profesional en Ingeniería de Software y Bases de Datos", school: "Escuela Nacional de Informática (ENI) – Universidad de Fianarantsoa", period: "En curso" },
+      bachelor: { title: "Grado profesional en Ingeniería de Software y Bases de Datos", school: "Escuela Nacional de Informática (ENI) – Universidad de Fianarantsoa", period: "2022 – 2025" },
+      office: { title: "Ofimática y diseño gráfico", school: "Instituto de Formación Profesional Antohomadinika", period: "Octubre 2022" },
+      english: { title: "Formación en lengua inglesa", school: "Madagascar Professional Training Center, Andranomena", period: "Ene. – Ago. 2022" },
+      bac: { title: "Bachillerato, serie C", school: "Liceo Católico Notre Dame de l'Assomption, Mahitsy", period: "2020 – 2021" },
+    } },
+  contact: { label: "Contacto", title: "Trabajemos juntos", intro: "Abierto a prácticas, proyectos freelance y oportunidades laborales. No dudes en escribirme.", send: "Enviarme un correo", email: "Correo", phone: "Teléfono", whatsapp: "WhatsApp", github: "GitHub", location: "Ubicación" },
+  footer: "Creado con Next.js",
+};

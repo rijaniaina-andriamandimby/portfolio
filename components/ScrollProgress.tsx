@@ -1,12 +1,14 @@
 "use client";
 import { useEffect, useRef } from "react";
 import { ArrowUp } from "lucide-react";
+import { useT } from "@/lib/i18n";
 
 const R = 20, C = 2 * Math.PI * R;
 
 // Top progress bar + bottom-right circular indicator / back-to-top button.
 // Updates DOM styles directly inside one rAF per frame: no React re-render while scrolling.
 export default function ScrollProgress() {
+  const { t } = useT();
   const bar = useRef<HTMLDivElement>(null);
   const ring = useRef<SVGCircleElement>(null);
   const btn = useRef<HTMLButtonElement>(null);
@@ -32,7 +34,7 @@ export default function ScrollProgress() {
   return (
     <>
       <div ref={bar} aria-hidden className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left scale-x-0 bg-accent will-change-transform" />
-      <button ref={btn} data-show="false" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label="Back to top"
+      <button ref={btn} data-show="false" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} aria-label={t.nav.top}
         className="fixed bottom-5 right-4 z-50 grid size-12 translate-y-3 place-items-center rounded-full bg-surface text-accent opacity-0 shadow-[0_8px_24px_rgba(0,0,0,.3)] transition duration-300 pointer-events-none data-[show=true]:pointer-events-auto data-[show=true]:translate-y-0 data-[show=true]:opacity-100 hover:-translate-y-0.5 sm:bottom-6 sm:right-6">
         <svg viewBox="0 0 48 48" className="absolute inset-0 size-full -rotate-90" aria-hidden>
           <circle cx="24" cy="24" r={R} fill="none" stroke="var(--line)" strokeWidth="3" />

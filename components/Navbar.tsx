@@ -1,18 +1,21 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Briefcase, FolderKanban, GraduationCap, Mail, Menu, User, Wrench, X } from "lucide-react";
+import { useT } from "@/lib/i18n";
+import LanguageSwitcher from "./LanguageSwitcher";
 import ThemeToggle from "./ThemeToggle";
 import { ui } from "./ui";
 
 const links = [
-  { label: "Profile", href: "#profile", icon: User },
-  { label: "Skills", href: "#skills", icon: Wrench },
-  { label: "Projects", href: "#projects", icon: FolderKanban },
-  { label: "Education", href: "#education", icon: GraduationCap },
-  { label: "Contact", href: "#contact", icon: Briefcase },
-];
+  { key: "profile", href: "#profile", icon: User },
+  { key: "skills", href: "#skills", icon: Wrench },
+  { key: "projects", href: "#projects", icon: FolderKanban },
+  { key: "education", href: "#education", icon: GraduationCap },
+  { key: "contact", href: "#contact", icon: Briefcase },
+] as const;
 
 export default function Navbar() {
+  const { t } = useT();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("profile");
@@ -41,22 +44,23 @@ export default function Navbar() {
           return (
             <a key={l.href} href={l.href} aria-current={on ? "true" : undefined}
               className={`${ui.label} relative inline-flex items-center gap-1.5 py-1 transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-accent after:transition-transform after:duration-300 hover:text-accent ${on ? "text-accent after:scale-x-100" : "text-muted after:scale-x-0"}`}>
-              <l.icon size={14} aria-hidden />{l.label}
+              <l.icon size={14} aria-hidden />{t.nav[l.key]}
             </a>
           );
         })}
       </div>
       <div className="flex items-center gap-3">
+        <LanguageSwitcher />
         <ThemeToggle />
-        <a href="mailto:rija.fam@gmail.com" className={`${ui.btn} hidden !px-5 !py-2 md:inline-flex`}><Mail size={14} aria-hidden />Contact me</a>
-        <button className="md:hidden" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
+        <a href="mailto:rija.fam@gmail.com" className={`${ui.btn} hidden !px-5 !py-2 md:inline-flex`}><Mail size={14} aria-hidden />{t.nav.contactMe}</a>
+        <button className="md:hidden" onClick={() => setOpen(!open)} aria-label={open ? t.nav.closeMenu : t.nav.openMenu} aria-expanded={open}>
           {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
       {open && (
         <div className="fixed inset-x-0 top-[60px] flex animate-fade-up flex-col gap-5 border-b border-line bg-bg2 px-8 py-6 md:hidden">
           {links.map((l) => (
-            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className={`${ui.h3} flex items-center gap-3 ${active === l.href.slice(1) ? "text-accent" : ""}`}><l.icon size={18} aria-hidden />{l.label}</a>
+            <a key={l.href} href={l.href} onClick={() => setOpen(false)} className={`${ui.h3} flex items-center gap-3 ${active === l.href.slice(1) ? "text-accent" : ""}`}><l.icon size={18} aria-hidden />{t.nav[l.key]}</a>
           ))}
         </div>
       )}
