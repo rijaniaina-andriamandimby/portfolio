@@ -17,7 +17,7 @@ type Project = RawProject & { title: string; place: string; date: string; desc: 
 function Photo({ p, i, onError, failed, contain, sizes }: { p: Project; i: number; onError: () => void; failed: boolean; contain?: boolean; sizes: string }) {
   const { t } = useT();
   if (failed) return <div className={`${ui.small} grid size-full place-items-center p-4 text-center`}><span className="flex flex-col items-center gap-2"><ImageOff size={24} aria-hidden />public/projects/{p.slug}/{i + 1}.webp</span></div>;
-  return <Image key={i} src={`/projects/${p.slug}/${i + 1}.webp`} alt={`${p.title}, ${t.projects.photo} ${i + 1}/${p.n}`} fill sizes={sizes} className={contain ? "object-contain" : "object-cover object-top"} onError={onError} />;
+  return <Image key={i} src={`/projects/${p.slug}/${i + 1}.webp`} alt={`${p.title}, ${t.projects.photo} ${i + 1}/${p.n}`} fill sizes={sizes} className={contain ? "animate-fade-in object-contain" : "animate-fade-in object-cover object-top transition-transform duration-700 group-hover/img:scale-105"} onError={onError} />;
 }
 
 function Lightbox({ p, i, setI, go, failed, fail, onClose }: { p: Project; i: number; setI: (n: number) => void; go: (d: number) => void; failed: Record<number, boolean>; fail: (n: number) => void; onClose: () => void }) {
@@ -57,14 +57,14 @@ function Carousel({ p }: { p: Project }) {
   const go = (d: number) => setI((v) => (v + d + p.n) % p.n);
   const fail = (n: number) => setFailed((f) => ({ ...f, [n]: true }));
   if (p.n === 0) return (
-    <div className="grid aspect-[16/10] place-items-center rounded-sm bg-bg2 text-muted"><div className={`${ui.small} flex flex-col items-center gap-2 p-4 text-center`}><p.icon size={28} aria-hidden />{t.projects.noPhotos}</div></div>
+    <div className="grid aspect-[2/1] place-items-center rounded-sm bg-bg2 text-muted"><div className={`${ui.small} flex flex-col items-center gap-2 p-4 text-center`}><p.icon size={28} aria-hidden />{t.projects.noPhotos}</div></div>
   );
   const arrow = "absolute top-1/2 z-10 grid size-9 -translate-y-1/2 place-items-center rounded-full bg-black/70 text-white transition-colors hover:bg-black";
   return (
-    <div className="relative grid aspect-[16/10] place-items-center overflow-hidden rounded-sm bg-bg2 text-muted" tabIndex={0} role="group" aria-roledescription="carousel" aria-label={`${p.title} – ${t.projects.photos}`}
+    <div className="relative grid aspect-[2/1] place-items-center overflow-hidden rounded-sm bg-bg2 text-muted" tabIndex={0} role="group" aria-roledescription="carousel" aria-label={`${p.title} – ${t.projects.photos}`}
       onKeyDown={(e) => { if (e.key === "ArrowRight") go(1); if (e.key === "ArrowLeft") go(-1); if (e.key === "Enter") setOpen(true); }}>
       <button onClick={() => setOpen(true)} aria-label={`${p.title} – ${t.projects.open}`} className="group/img absolute inset-0 grid cursor-zoom-in place-items-center">
-        <Photo p={p} i={i} failed={!!failed[i]} onError={() => fail(i)} sizes="(min-width: 1024px) 340px, (min-width: 640px) 45vw, 92vw" />
+        <Photo p={p} i={i} failed={!!failed[i]} onError={() => fail(i)} sizes="(min-width: 1024px) 520px, (min-width: 768px) 46vw, 92vw" />
         <span className="absolute bottom-2 right-2 grid size-8 place-items-center rounded-full bg-black/70 text-white opacity-0 transition-opacity group-hover/img:opacity-100 group-focus-visible/img:opacity-100"><Maximize2 size={15} aria-hidden /></span>
       </button>
       <button className={`${arrow} left-2`} onClick={() => go(-1)} aria-label={t.projects.prev}><ChevronLeft size={18} /></button>
@@ -85,7 +85,7 @@ export default function Projects() {
     <section id="projects" className={`${ui.sec} bg-bg2`}>
       <div className={ui.wrap}>
         <SectionHeader icon={Briefcase} num="02" label={t.projects.label} title={t.projects.title} />
-        <div className={ui.grid}>
+        <div className="grid gap-6 md:grid-cols-2">
           {list.map((p, i) => (
             <Reveal key={p.slug} delay={(i % 3) * 90} className="h-full">
             <article className={`${ui.card} group flex h-full flex-col gap-4`}>

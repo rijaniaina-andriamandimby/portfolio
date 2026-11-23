@@ -22,6 +22,15 @@
   --color-muted: var(--muted);
   --font-sans: var(--font-roboto), Roboto, system-ui, sans-serif;
   --animate-fade-up: fade-up 0.6s ease both;
+  --animate-rise: rise .9s cubic-bezier(.22,.61,.36,1) both;
+  --animate-fade-in: fade-in .5s ease both;
+  --animate-shimmer: shimmer 5s linear infinite;
+  --animate-drift: drift 14s ease-in-out infinite;
+  --animate-drift-slow: drift 22s ease-in-out infinite reverse;
+  @keyframes rise { from { transform: translateY(110%); } to { transform: translateY(0); } }
+  @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+  @keyframes drift { 0%, 100% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(40px,-30px,0) scale(1.12); } }
   --animate-float: float 6s ease-in-out infinite;
   --animate-glow: glow 4.5s ease-in-out infinite;
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
@@ -56,3 +65,20 @@ html { scroll-padding-top: 5rem; }
 
 /* Pause infinite animations (portrait float/glow) while the hero is off-screen */
 [data-offscreen], [data-offscreen] * { animation-play-state: paused !important; }
+
+/* Spotlight that follows the cursor on cards (position set by components/ui/Spotlight.tsx) */
+.spot::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--accent) 12%, transparent), transparent 65%); }
+.spot:hover::after { opacity: 1; }
+
+/* Scroll-driven effects: progressive enhancement (Chromium / Safari 26+), disabled for reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .hero-out { animation: hero-out linear both; animation-timeline: view(); animation-range: exit 10% exit 85%; }
+    .section-num { animation: num-drift linear both; animation-timeline: view(); animation-range: cover; }
+    .tl-axis::before { transform-origin: top; animation: axis-grow linear both; animation-timeline: view(); animation-range: entry 15% cover 75%; }
+    @keyframes hero-out { to { opacity: 0; transform: translateY(-60px) scale(.97); } }
+    @keyframes num-drift { from { transform: translateY(50px); } to { transform: translateY(-50px); } }
+    @keyframes axis-grow { from { transform: translateX(-50%) scaleY(0); } to { transform: translateX(-50%) scaleY(1); } }
+  }
+}

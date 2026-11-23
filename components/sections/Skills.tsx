@@ -21,12 +21,14 @@ export default function Skills() {
                 <div className={ui.topLine} />
                 <h3 className={`${ui.label} mb-3 flex items-center gap-2 text-accent`}><g.icon size={15} aria-hidden />{t.skills.cats[g.key]}</h3>
                 <ul className="flex flex-wrap gap-2">
-                  {g.items.map((n) => (
-                    <li key={n} className="flex items-center gap-2 rounded-sm border border-line bg-bg px-3 py-1.5 text-[.82rem] font-medium transition hover:border-accent">
-                      <TechIcon name={n} size={20} />
-                      {n.replace(" (basics)", "")}
-                      {n.includes("basics") && <span className={ui.small}>· {t.skills.basics}</span>}
-                    </li>
+                  {g.items.map((n, k) => (
+                    <Reveal as="li" key={n} delay={k * 70}>
+                      <div className="group/chip flex items-center gap-2 rounded-sm border border-line bg-bg px-3 py-1.5 text-[.82rem] font-medium transition hover:-translate-y-0.5 hover:border-accent">
+                        <span className="transition-transform duration-300 group-hover/chip:scale-125 group-hover/chip:rotate-6"><TechIcon name={n} size={20} /></span>
+                        {n.replace(" (basics)", "")}
+                        {n.includes("basics") && <span className={ui.small}>· {t.skills.basics}</span>}
+                      </div>
+                    </Reveal>
                   ))}
                 </ul>
               </div>

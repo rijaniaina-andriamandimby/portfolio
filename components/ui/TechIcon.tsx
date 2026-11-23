@@ -31,3 +31,9 @@ export default function TechIcon({ name, size = 20 }: { name: string; size?: num
   if (name === "CI/CD Pipelines") return <Workflow size={size} className="text-accent" aria-hidden />; // no brand logo exists for a practice
   return icons[name] ? <SimpleIcon icon={icons[name]} size={size} /> : null;
 }
+
+// LinkedIn was removed from simple-icons: local SVG (public/icons/linkedin.svg).
+export const LinkedinIcon = ({ size = 22, className }: { size?: number; className?: string }) => (
+  // eslint-disable-next-line @next/next/no-img-element
+  <img src="/icons/linkedin.svg" alt="" width={size} height={size} aria-hidden className={className} />
+);

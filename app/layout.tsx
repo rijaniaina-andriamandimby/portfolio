@@ -36,10 +36,10 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Person", "@id": `${SITE_URL}/#person`, name: SITE.name, url: SITE_URL, image: `${SITE_URL}/profile.webp`,
-      email: `mailto:${SITE.contact.email}`, jobTitle: SITE.jobTitle, sameAs: [SITE.contact.github],
-      address: { "@type": "PostalAddress", addressLocality: "Fianarantsoa", addressCountry: "MG" },
+      email: `mailto:${SITE.contact.email}`, jobTitle: SITE.jobTitle, sameAs: [SITE.contact.github, SITE.contact.linkedin],
+      address: { "@type": "PostalAddress", addressCountry: "MG" },
       alumniOf: { "@type": "CollegeOrUniversity", name: "École Nationale d'Informatique, Université de Fianarantsoa" },
-      knowsAbout: ["ReactJS", "Next.js", "ExpressJS", "Django", "PostgreSQL", "Docker", "CI/CD", "Jenkins", "GitHub Actions", "Python", "TypeScript", "Java", "Kotlin"],
+      knowsAbout: ["Software Engineering", "Data Engineering", "Data Pipelines", "ReactJS", "Next.js", "ExpressJS", "Django", "PostgreSQL", "Docker", "CI/CD", "Jenkins", "GitHub Actions", "Python", "TypeScript", "Java", "Kotlin"],
     },
     { "@type": "WebSite", "@id": `${SITE_URL}/#website`, url: SITE_URL, name: `${SITE.name} — Portfolio`, inLanguage: ["en", "fr", "de", "es"], publisher: { "@id": `${SITE_URL}/#person` } },
   ],
@@ -50,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="scroll-smooth" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.dataset.theme=t}catch(e){}` }} />
-        <noscript><style>{`.reveal{opacity:1!important;transform:none!important}`}</style></noscript>
+        <noscript><style>{`.reveal{opacity:1!important;transform:none!important}[class*="scale-0"]{scale:1!important}`}</style></noscript>
       </head>
       <body className={`${roboto.variable} overflow-x-hidden bg-bg font-sans text-base leading-relaxed text-fg antialiased`}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />

@@ -14,14 +14,14 @@ export default function Education() {
     <section id="education" className={ui.sec}>
       <div className={ui.wrap}>
         <SectionHeader icon={GraduationCap} num="03" label={t.education.label} title={t.education.title} />
-        <ol className="relative flex flex-col gap-8 before:absolute before:inset-y-0 before:left-5 before:w-px before:-translate-x-1/2 before:bg-line md:gap-10 md:before:left-1/2">
+        <ol className="tl-axis relative flex flex-col gap-8 before:absolute before:inset-y-0 before:left-5 before:w-px before:-translate-x-1/2 before:bg-line md:gap-10 md:before:left-1/2">
           {steps.map((s, i) => {
             const left = i % 2 === 0; // alternate sides on desktop
             const Status = statusIcon[s.status];
             const item = t.education.items[s.key];
             return (
-              <Reveal as="li" key={s.key} from={left ? "left" : "right"} className={`relative pl-14 md:w-1/2 md:pl-0 ${left ? "md:pr-14 md:text-right" : "md:ml-auto md:pl-14"}`}>
-                <span className={`absolute left-5 top-5 grid -translate-x-1/2 place-items-center rounded-full border-2 border-accent bg-bg text-accent ${s.major ? "size-10" : "size-7"} ${left ? "md:left-auto md:right-0 md:translate-x-1/2" : "md:left-0"}`}>
+              <Reveal as="li" key={s.key} from={left ? "left" : "right"} className={`group/tl relative pl-14 md:w-1/2 md:pl-0 ${left ? "md:pr-14 md:text-right" : "md:ml-auto md:pl-14"}`}>
+                <span className={`absolute left-5 top-5 grid scale-0 transition-transform delay-200 duration-500 group-[.in]/tl:scale-100 -translate-x-1/2 place-items-center rounded-full border-2 border-accent bg-bg text-accent ${s.major ? "size-10" : "size-7"} ${left ? "md:left-auto md:right-0 md:translate-x-1/2" : "md:left-0"}`}>
                   <s.icon size={s.major ? 18 : 14} aria-hidden />
                 </span>
                 <article className={`${ui.card} group`}>

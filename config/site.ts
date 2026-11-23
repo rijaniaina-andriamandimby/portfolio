@@ -4,15 +4,13 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3
 
 export const SITE = {
   name: "Rijaniaina Andriamandimby",
-  title: "Rijaniaina Andriamandimby | Full Stack Developer",
-  description: "Portfolio of Rijaniaina Andriamandimby, Full Stack Developer from Madagascar: web apps with ReactJS, Next.js, ExpressJS, Django and PostgreSQL.",
-  jobTitle: "Full Stack Developer",
-  keywords: ["Rijaniaina Andriamandimby", "Full Stack Developer", "ReactJS", "Next.js", "ExpressJS", "Django", "PostgreSQL", "Docker", "CI/CD", "Madagascar", "Fianarantsoa", "portfolio"],
+  title: "Rijaniaina Andriamandimby | Software Engineer & Data Engineer",
+  description: "Portfolio of Rijaniaina Andriamandimby, Software Engineer & Data Engineer from Madagascar: web apps, databases and data pipelines with Python, Next.js and PostgreSQL.",
+  jobTitle: "Software Engineer & Data Engineer",
+  keywords: ["Rijaniaina Andriamandimby", "Software Engineer", "Data Engineer", "Full Stack Developer", "Data Pipelines", "Python", "ReactJS", "Next.js", "ExpressJS", "Django", "PostgreSQL", "Docker", "CI/CD", "Madagascar", "Fianarantsoa", "portfolio"],
   contact: {
     email: "rija.fam@gmail.com",
-    phone: "038 183 600", phoneHref: "tel:+261381836000",
-    whatsapp: "032 843 3393", whatsappHref: "tel:+261328433393",
     github: "https://github.com/rijaniaina-andriamandimby", githubHandle: "rijaniaina-andriamandimby",
-    location: "Ampasambazaha, Fianarantsoa",
+    linkedin: "https://www.linkedin.com/in/rijaniaina-andriamandimby-80905428b", linkedinHandle: "rijaniaina-andriamandimby",
   },
 } as const;
