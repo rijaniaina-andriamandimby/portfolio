@@ -9,4 +9,4 @@ export const skills = [
   { key: "devops", icon: GitBranch, items: ["Git", "Docker", "Jenkins", "GitHub Actions", "CI/CD Pipelines"] },
 ] as const;
 
-export const spoken = [{ key: "fr", level: "B2", pct: 72 }, { key: "en", level: "B1", pct: 55 }, { key: "mg", level: "", pct: 100 }] as const;
+export const spoken = [{ key: "fr", level: "C1", pct: 72 }, { key: "en", level: "B2", pct: 55 }, { key: "mg", level: "", pct: 100 }] as const;
