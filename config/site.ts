@@ -4,7 +4,7 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3
 
 export const SITE = {
   name: "Rijaniaina Andriamandimby",
-  title: "Rijaniaina Andriamandimby | Full Stack Developer (Python / JavaScript)",
+  title: "Rijaniaina | Full Stack Developer",
   description: "Portfolio of Rijaniaina Andriamandimby, Full Stack Developer from Madagascar building web applications with Python, Django, JavaScript, React, Next.js and PostgreSQL.",
   jobTitle: "Full Stack Developer",
   keywords: ["Rijaniaina Andriamandimby", "Full Stack Developer", "Python", "JavaScript", "ReactJS", "Next.js", "ExpressJS", "Django", "PostgreSQL", "Docker", "CI/CD", "Madagascar", "portfolio"],
