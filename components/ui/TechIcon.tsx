@@ -6,7 +6,7 @@ type Icon = { path: string; hex: string };
 // Real brand icons, bundled locally from simple-icons. Java was removed from simple-icons, so it uses a local SVG (public/icons/java.svg).
 const icons: Record<string, Icon> = {
   Python: siPython, JavaScript: siJavascript, TypeScript: siTypescript, ReactJS: siReact, NextJS: siNextdotjs,
-  NodeJS: siNodedotjs, ExpressJS: siExpress, Django: siDjango, "NestJS (basics)": siNestjs, "FastAPI (basics)": siFastapi,
+  NodeJS: siNodedotjs, ExpressJS: siExpress, Django: siDjango, NestJS: siNestjs, FastAPI: siFastapi,
   PostgreSQL: siPostgresql, MySQL: siMysql, Git: siGit, Docker: siDocker, Kotlin: siKotlin, Jenkins: siJenkins, "GitHub Actions": siGithubactions,
 };
 

@@ -25,8 +25,7 @@ export default function Skills() {
                     <Reveal as="li" key={n} delay={k * 70}>
                       <div className="group/chip flex items-center gap-2 rounded-sm border border-line bg-bg px-3 py-1.5 text-[.82rem] font-medium transition hover:-translate-y-0.5 hover:border-accent">
                         <span className="transition-transform duration-300 group-hover/chip:scale-125 group-hover/chip:rotate-6"><TechIcon name={n} size={20} /></span>
-                        {n.replace(" (basics)", "")}
-                        {n.includes("basics") && <span className={ui.small}>· {t.skills.basics}</span>}
+                        {n}
                       </div>
                     </Reveal>
                   ))}

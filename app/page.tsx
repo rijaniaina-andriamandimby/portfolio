@@ -1,4 +1,5 @@
 import ScrollProgress from "@/components/layout/ScrollProgress";
+import Cursor from "@/components/ui/Cursor";
 import Spotlight from "@/components/ui/Spotlight";
 import SectionDots from "@/components/layout/SectionDots";
 import Navbar from "@/components/layout/Navbar";
@@ -13,6 +14,7 @@ export default function Home() {
   return (
     <main>
       <ScrollProgress />
+      <Cursor />
       <Spotlight />
       <SectionDots />
       <Navbar />

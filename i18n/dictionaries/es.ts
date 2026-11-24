@@ -2,15 +2,15 @@ import type { Dict } from "./types";
 
 export const es: Dict = {
   nav: { skip: "Saltar al contenido", profile: "Perfil", skills: "Habilidades", projects: "Proyectos", education: "Formación", contact: "Contacto", contactMe: "Contáctame", openMenu: "Abrir menú", closeMenu: "Cerrar menú", light: "Cambiar a modo claro", dark: "Cambiar a modo oscuro", language: "Idioma", top: "Volver arriba" },
-  hero: { role: "Ingeniero de software e ingeniero de datos", bio: "Soy ingeniero de software e ingeniero de datos, impulsado por la curiosidad y la ambición, con una gran pasión por construir sistemas fiables de principio a fin: desde aplicaciones web y APIs hasta las bases de datos y los pipelines de datos que las sustentan. Disfruto resolviendo problemas complejos, explorando nuevas tecnologías y convirtiendo ideas en soluciones prácticas y de impacto, mientras sigo creciendo en lo técnico y en lo personal.", scroll: "Desplazar hacia abajo", view: "Ver mis proyectos", alt: "Retrato de Rijaniaina Andriamandimby" },
-  skills: { label: "Habilidades", title: "Stack técnico", cats: { languages: "Lenguajes", frontend: "Frontend", backend: "Backend", databases: "Bases de datos", devops: "DevOps y CI/CD" }, basics: "nociones", spokenTitle: "Idiomas hablados", spoken: { fr: "Francés", en: "Inglés", mg: "Malgache" }, native: "Lengua materna" },
+  hero: { role: "Desarrollador Full Stack · Python / JavaScript", bio: "Soy desarrollador full stack y trabajo con Python y JavaScript, impulsado por la curiosidad y la ambición, con una gran pasión por la tecnología y el desarrollo de software. Construyo aplicaciones web desde la interfaz hasta la base de datos —con React, Next.js, Express y Django— y disfruto resolviendo problemas complejos, explorando nuevas tecnologías y convirtiendo ideas en soluciones prácticas y de impacto. Actualmente curso un máster profesional en Ingeniería de Software y Bases de Datos, aprendiendo y creciendo cada día.", scroll: "Desplazar hacia abajo", view: "Ver mis proyectos", alt: "Retrato de Rijaniaina Andriamandimby" },
+  skills: { label: "Habilidades", title: "Stack técnico", cats: { languages: "Lenguajes", frontend: "Frontend", backend: "Backend", databases: "Bases de datos", devops: "DevOps y CI/CD" }, spokenTitle: "Idiomas hablados", spoken: { fr: "Francés", en: "Inglés", mg: "Malgache" }, native: "Lengua materna" },
   projects: { label: "Proyectos", title: "Experiencia y Logros", photo: "foto", photos: "fotos", open: "Abrir las fotos en una ventana", prev: "Foto anterior", next: "Foto siguiente", goTo: "Ir a la foto", close: "Cerrar", noPhotos: "Capturas de pantalla próximamente",
     types: { hackathon: "Hackathon", freelance: "Freelance", internship: "Prácticas de 3 meses", academic: "Proyecto académico", mobile: "Aplicación móvil" },
     items: {
-      "gestion-scolaire": { title: "Aplicación web de gestión escolar", place: "Liceo de Enseñanza General de Andramasina", date: "Diciembre 2025", desc: "Aplicación para gestionar los estudiantes, las asignaturas y los profesores del liceo de Andramasina." },
-      "communication-interne": { title: "Plataforma de comunicación interna", place: "Success MDG – Anosisoa, Antananarivo", date: "Sep. – Nov. 2025", desc: "Desarrollo de una plataforma de comunicación interna y seguimiento de actividades de la empresa." },
-      "villa-reservation": { title: "Rediseño web y app de reservas de villas", place: "Polypus Corporation S.A", date: "Sep. – Nov. 2024", desc: "Mejora del sitio web de la empresa y desarrollo de una aplicación de gestión de reservas de sus villas." },
-      "gestion-restaurant": { title: "Gestión de restaurante", place: "ENI Fianarantsoa", date: "", desc: "Aplicación para gestionar un restaurante (pedidos, menús, inventario)." },
+      "gestion-scolaire": { title: "Aplicación web de gestión escolar", place: "Liceo de Enseñanza General de Andramasina", desc: "Aplicación para gestionar los estudiantes, las asignaturas y los profesores del liceo de Andramasina." },
+      "communication-interne": { title: "Plataforma de comunicación interna", place: "Success MDG – Anosisoa, Antananarivo", desc: "Desarrollo de una plataforma de comunicación interna y seguimiento de actividades de la empresa." },
+      "villa-reservation": { title: "Rediseño web y app de reservas de villas", place: "Polypus Corporation S.A", desc: "Mejora del sitio web de la empresa y desarrollo de una aplicación de gestión de reservas de sus villas." },
+      "gestion-restaurant": { title: "Gestión de restaurante", place: "ENI Fianarantsoa", desc: "Aplicación para gestionar un restaurante (pedidos, menús, inventario)." },
     } },
   education: { label: "Formación", title: "Trayectoria académica", levels: { master: "Máster", bachelor: "Grado", certificate: "Certificado de formación", highschool: "Diploma de bachillerato" }, status: { progress: "En curso", completed: "Completado", certified: "Certificado" },
     items: {
@@ -21,5 +21,4 @@ export const es: Dict = {
       bac: { title: "Bachillerato, serie C", school: "Liceo Católico Notre Dame de l'Assomption, Mahitsy", period: "2020 – 2021" },
     } },
   contact: { label: "Contacto", title: "Trabajemos juntos", intro: "Abierto a prácticas, proyectos freelance y oportunidades laborales. No dudes en escribirme.", send: "Enviarme un correo", email: "Correo", github: "GitHub", linkedin: "LinkedIn" },
-  footer: "Creado con Next.js",
 };

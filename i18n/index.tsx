@@ -9,12 +9,11 @@ export const useT = () => useContext(LangContext);
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
-  // Saved choice first, then the browser language, then English.
+  // English by default; a language chosen by the visitor is remembered.
   useEffect(() => {
     try {
       const saved = localStorage.getItem("lang") as Lang | null;
-      const nav = navigator.language.slice(0, 2) as Lang;
-      setLangState(saved && LANGS.includes(saved) ? saved : LANGS.includes(nav) ? nav : "en");
+      setLangState(saved && LANGS.includes(saved) ? saved : "en");
     } catch {}
   }, []);
   useEffect(() => { document.documentElement.lang = lang; }, [lang]);

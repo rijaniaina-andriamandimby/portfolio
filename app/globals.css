@@ -82,3 +82,6 @@ html { scroll-padding-top: 5rem; }
     @keyframes axis-grow { from { transform: translateX(-50%) scaleY(0); } to { transform: translateX(-50%) scaleY(1); } }
   }
 }
+
+/* Native cursor hidden only while the custom cursor is active (mouse devices, no reduced motion) */
+html.has-cursor, html.has-cursor * { cursor: none !important; }

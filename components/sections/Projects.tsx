@@ -1,23 +1,23 @@
 "use client";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
-import { Briefcase, Building2, Calendar, ChevronLeft, ChevronRight, ImageOff, Maximize2, X } from "lucide-react";
+import { Briefcase, Building2, ChevronLeft, ChevronRight, ImageOff, Maximize2, X } from "lucide-react";
 import { useT } from "@/i18n";
 import Image from "next/image";
 import { projects, type RawProject } from "@/data/projects";
 import SectionHeader from "@/components/ui/SectionHeader";
-import TechIcon, { GithubIcon } from "@/components/ui/TechIcon";
+import TechIcon from "@/components/ui/TechIcon";
 import Reveal from "@/components/ui/Reveal";
 import { ui } from "@/components/ui/styles";
 
 
-type Project = RawProject & { title: string; place: string; date: string; desc: string; type: string };
+type Project = RawProject & { title: string; place: string; desc: string; type: string };
 
 // next/image: automatic AVIF/WebP, responsive sizes and lazy loading. `fill` needs a positioned parent with a size.
 function Photo({ p, i, onError, failed, contain, sizes }: { p: Project; i: number; onError: () => void; failed: boolean; contain?: boolean; sizes: string }) {
   const { t } = useT();
   if (failed) return <div className={`${ui.small} grid size-full place-items-center p-4 text-center`}><span className="flex flex-col items-center gap-2"><ImageOff size={24} aria-hidden />public/projects/{p.slug}/{i + 1}.webp</span></div>;
-  return <Image key={i} src={`/projects/${p.slug}/${i + 1}.webp`} alt={`${p.title}, ${t.projects.photo} ${i + 1}/${p.n}`} fill sizes={sizes} className={contain ? "animate-fade-in object-contain" : "animate-fade-in object-cover object-top transition-transform duration-700 group-hover/img:scale-105"} onError={onError} />;
+  return <Image key={i} src={`/projects/${p.slug}/${i + 1}.webp`} alt={`${p.title}, ${t.projects.photo} ${i + 1}/${p.n}`} fill sizes={sizes} {...(contain ? { unoptimized: true } : { quality: 90 })} className={contain ? "animate-fade-in object-contain" : "animate-fade-in object-cover object-top transition-transform duration-700 group-hover/img:scale-[1.03]"} onError={onError} />;
 }
 
 function Lightbox({ p, i, setI, go, failed, fail, onClose }: { p: Project; i: number; setI: (n: number) => void; go: (d: number) => void; failed: Record<number, boolean>; fail: (n: number) => void; onClose: () => void }) {
@@ -36,7 +36,7 @@ function Lightbox({ p, i, setI, go, failed, fail, onClose }: { p: Project; i: nu
         <div><p className="font-bold">{p.title}</p><p className="text-sm opacity-70">{i + 1} / {p.n}</p></div>
         <button onClick={(e) => { e.stopPropagation(); onClose(); }} autoFocus aria-label={t.projects.close} className="grid size-11 place-items-center rounded-full bg-white/10 hover:bg-white/25"><X size={22} /></button>
       </div>
-      <div onClick={(e) => e.stopPropagation()} className="relative h-[calc(100vh-10rem)] w-[calc(100vw-8rem)] text-white/70">
+      <div onClick={(e) => e.stopPropagation()} className="relative h-[calc(100vh-10rem)] w-[calc(100vw-8rem)] max-w-[1600px] text-white/70 [@media(min-resolution:2dppx)]:max-w-[1100px]">
         <Photo p={p} i={i} failed={!!failed[i]} onError={() => fail(i)} contain sizes="100vw" />
       </div>
       <button className={`${arrow} left-3 sm:left-6`} onClick={(e) => { e.stopPropagation(); go(-1); }} aria-label={t.projects.prev}><ChevronLeft size={24} /></button>
@@ -93,13 +93,11 @@ export default function Projects() {
               <Carousel p={p} />
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className={`${ui.label} inline-flex items-center gap-1.5 rounded-sm border border-line px-2 py-1 text-accent`}><p.icon size={13} aria-hidden />{p.type}</span>
-                {p.date && <span className={`${ui.small} flex items-center gap-1`}><Calendar size={13} aria-hidden />{p.date}</span>}
               </div>
               <h3 className={ui.h3}>{p.title}</h3>
               <p className={`${ui.small} flex items-center gap-1.5 !text-accent`}><Building2 size={14} aria-hidden />{p.place}</p>
               <p className={ui.text}>{p.desc}</p>
               {p.stack.length > 0 && <div className={ui.row}>{p.stack.map((t) => <span key={t} className={ui.tag}><TechIcon name={t} size={14} />{t}</span>)}</div>}
-              <a href={p.github} target="_blank" rel="noopener noreferrer" className={`${ui.btnGhost} mt-auto self-start !px-4 !py-2`}><GithubIcon size={14} />GitHub</a>
             </article>
             </Reveal>
           ))}

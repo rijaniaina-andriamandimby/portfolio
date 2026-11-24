@@ -42,8 +42,6 @@ for (const m of projects.matchAll(/slug: "([^"]+)".*?n: (\d+)/g)) {
   if (Number(n) === 0) { warnings.push(`Project "${slug}" has no photo (placeholder displayed).`); continue; }
   for (let i = 1; i <= Number(n); i++) if (!existsSync(`public/projects/${slug}/${i}.webp`)) errors.push(`Missing photo: public/projects/${slug}/${i}.webp`);
 }
-const ghPlaceholders = (projects.match(/github: GH/g) ?? []).length;
-if (ghPlaceholders) warnings.push(`${ghPlaceholders} project(s) still point to your GitHub profile instead of their own repository (data/projects.ts).`);
 
 // 5. Heavy images
 for (const f of walk("public")) if ([".png", ".jpg", ".jpeg", ".webp"].includes(extname(f)) && statSync(f).size > 500 * 1024) warnings.push(`${f} is ${(statSync(f).size / 1024) | 0} KB (> 500 KB): compress it.`);

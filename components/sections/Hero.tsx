@@ -90,7 +90,7 @@ export default function Hero() {
         <div className="relative order-1 mx-auto w-full max-w-[250px] animate-fade-up [animation-delay:.2s] md:order-2 md:max-w-[340px]">
           <div ref={tiltRef} className="relative transition-transform duration-300 ease-out will-change-transform">
             <div className="absolute inset-x-8 bottom-4 top-12 animate-glow rounded-full bg-accent/30 blur-3xl" aria-hidden />
-            <Image src="/profile.webp" width={297} height={503} priority sizes="(min-width: 768px) 340px, 250px" alt={t.hero.alt} className="relative h-auto w-full animate-float object-contain object-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,.35)]" />
+            <Image src="/profile.webp" width={528} height={898} unoptimized priority sizes="(min-width: 768px) 340px, 250px" alt={t.hero.alt} className="relative h-auto w-full animate-float object-contain object-bottom drop-shadow-[0_20px_30px_rgba(0,0,0,.35)]" />
           </div>
         </div>
       </div>

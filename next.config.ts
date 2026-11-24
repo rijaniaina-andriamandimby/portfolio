@@ -11,7 +11,8 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  images: { formats: ["image/avif", "image/webp"], minimumCacheTTL: 60 * 60 * 24 * 30 },
+  // WebP only: AVIF softens the thin text of UI screenshots. Qualities used: 90 (project cards). The popup and the portrait are served untouched (`unoptimized`).
+  images: { formats: ["image/webp"], qualities: [75, 90, 95], minimumCacheTTL: 60 * 60 * 24 * 30 },
   // Strip console.* from production bundles (errors and warnings are kept).
   compiler: { removeConsole: { exclude: ["error", "warn"] } },
   async headers() {

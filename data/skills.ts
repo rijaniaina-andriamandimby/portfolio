@@ -4,7 +4,7 @@ import { Code2, Database, GitBranch, Monitor, Server } from "lucide-react";
 export const skills = [
   { key: "languages", icon: Code2, items: ["Python", "Java", "JavaScript", "TypeScript", "Kotlin"] },
   { key: "frontend", icon: Monitor, items: ["ReactJS", "NextJS"] },
-  { key: "backend", icon: Server, items: ["NodeJS", "ExpressJS", "Django", "NestJS (basics)", "FastAPI (basics)"] },
+  { key: "backend", icon: Server, items: ["NodeJS", "ExpressJS", "Django", "NestJS", "FastAPI"] },
   { key: "databases", icon: Database, items: ["PostgreSQL", "MySQL"] },
   { key: "devops", icon: GitBranch, items: ["Git", "Docker", "Jenkins", "GitHub Actions", "CI/CD Pipelines"] },
 ] as const;
